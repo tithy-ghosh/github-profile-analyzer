@@ -1,0 +1,70 @@
+/* src/styles/darkMode.css */
+
+/* Dark mode with gradient backgrounds and accent colors */
+.dark {
+  /* Main background - subtle gradient */
+  @apply bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900;
+}
+
+/* Cards with subtle glassmorphism effect */
+.dark .card-glass {
+  @apply bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm;
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(30, 41, 59, 0.5);
+}
+
+/* Accent gradient for headers */
+.dark .gradient-text {
+  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 50%, #1e40af 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Enhanced buttons for dark mode */
+.dark .btn-primary {
+  @apply bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+  transition: all 0.3s ease;
+}
+
+.dark .btn-primary:hover {
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
+  transform: translateY(-2px);
+}
+
+/* Input fields with glow */
+.dark input:focus {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+}
+
+/* Profile images with glow */
+.dark img.profile-avatar {
+  box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
+  border: 2px solid rgba(59, 130, 246, 0.5);
+}
+
+/* Animated gradient background */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.dark.animated-bg {
+  background: linear-gradient(
+    -45deg,
+    #1e293b,
+    #1e3a8a,
+    #1e293b,
+    #0c4a6e
+  );
+  background-size: 400% 400%;
+  animation: gradient-shift 15s ease infinite;
+}
