@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import sun from '../assets/sun.png'
-import moon from '../assets/moon.png'
+import sun from  '../assets/sun.png'
+import moon from '../assets/cloudy-night.png'
 import github from '../assets/github.png'
 const Navbar = () => {
     const [dark, setDark] = useState(() =>{
@@ -28,7 +28,7 @@ const Navbar = () => {
             </Link>
             <button onClick={() => setDark(!dark)}>
                 {dark ? (
-                    <img src={sun} alt="Switch to light mode"  className='h-8 bg-amber-50 rounded-full py-2 px-2'/>
+                    <img src={sun} alt="Switch to light mode"  className='h-6 w-6'/>
                 ) : (
                     <img src={moon} alt="Switch to dark mode"  className='h-6 w-6'/>
                 )}
