@@ -46,14 +46,17 @@ const stats = [
                     <span>📍 {user.location}</span>
                 )
             }
+            <br />
             {
                 user.blog && (
+                    
                     <a href={user.blog} target='_blank' rel='noreferrer' className='text-blue-500 hover:underline'>
                         🔗 Website
                     </a>
                 )
             }
-            <span>Joined {joined}</span>
+            <br />
+             <span> Joined {joined}</span>
            </div>
            
         </div>
