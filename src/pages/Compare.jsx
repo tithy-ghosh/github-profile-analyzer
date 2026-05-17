@@ -401,45 +401,41 @@ const Compare = () => {
                       border border-gray-200/80 dark:border-[#21262d]
                       rounded-2xl p-5 mb-6 shadow-sm'>
 
-        {/* Mobile: stacked layout. sm+: single row */}
-        <div className='space-y-3 sm:space-y-0'>
+        {/* Inputs + button row */}
+        <div className='flex flex-col sm:flex-row items-stretch sm:items-end gap-3'>
+          <UserInput
+            label='First user'
+            value={u1}
+            onChange={v => { setU1(v); setError('') }}
+            history={history}
+            placeholder='e.g. torvalds'
+          />
 
-          {/* Inputs row — stacked on mobile, side by side on sm+ */}
-          <div className='flex flex-col sm:flex-row items-stretch sm:items-end gap-3'>
-            <UserInput
-              label='First user'
-              value={u1}
-              onChange={v => { setU1(v); setError('') }}
-              history={history}
-              placeholder='e.g. torvalds'
-            />
-
-            {/* "vs" divider — horizontal on mobile, vertical on sm+ */}
-            <div className='flex sm:flex-col items-center justify-center gap-2 sm:gap-0 sm:pb-0.5 sm:flex-shrink-0'>
-              <div className='flex-1 sm:flex-none h-px sm:h-0 sm:w-px bg-gray-200 dark:bg-white/10' />
-              <div className='w-8 h-8 rounded-full flex-shrink-0
-                              bg-gray-100 dark:bg-white/[0.06]
-                              border border-gray-200 dark:border-white/10
-                              flex items-center justify-center
-                              text-xs font-bold text-gray-400'>
-                vs
-              </div>
-              <div className='flex-1 sm:flex-none h-px sm:h-0 sm:w-px bg-gray-200 dark:bg-white/10' />
+          {/* "vs" divider */}
+          <div className='flex sm:flex-col items-center justify-center gap-2 sm:gap-0 sm:pb-0.5 sm:flex-shrink-0'>
+            <div className='flex-1 sm:flex-none h-px sm:h-0 sm:w-px bg-gray-200 dark:bg-white/10' />
+            <div className='w-8 h-8 rounded-full flex-shrink-0
+                            bg-gray-100 dark:bg-white/[0.06]
+                            border border-gray-200 dark:border-white/10
+                            flex items-center justify-center
+                            text-xs font-bold text-gray-400'>
+              vs
             </div>
-
-            <UserInput
-              label='Second user'
-              value={u2}
-              onChange={v => { setU2(v); setError('') }}
-              history={history}
-              placeholder='e.g. gaearon'
-            />
+            <div className='flex-1 sm:flex-none h-px sm:h-0 sm:w-px bg-gray-200 dark:bg-white/10' />
           </div>
 
-          {/* Compare button — full width on mobile */}
+          <UserInput
+            label='Second user'
+            value={u2}
+            onChange={v => { setU2(v); setError('') }}
+            history={history}
+            placeholder='e.g. gaearon'
+          />
+
+          {/* Compare button — aligns to bottom of inputs on sm+ */}
           <button
             onClick={handleCompare}
-            className='w-full sm:w-auto mt-5 sm:mt-5 px-6 py-2.5 rounded-xl
+            className='w-full sm:w-auto sm:flex-shrink-0 px-6 py-2.5 rounded-xl
                        font-semibold text-sm text-white
                        bg-blue-600 hover:bg-blue-700
                        shadow-md shadow-blue-500/20
@@ -564,45 +560,43 @@ const Compare = () => {
           {/* Full table */}
           <div className='bg-white/70 dark:bg-[#161b22] backdrop-blur-sm
                           border border-gray-200/80 dark:border-[#21262d]
-                          rounded-2xl overflow-hidden shadow-sm'>
-            <div className='px-5 py-3.5 border-b border-gray-100 dark:border-white/[0.06]'>
+                          rounded-2xl overflow-hidden shadow-sm mt-6'>
+            <div className='px-4 sm:px-5 py-3.5 border-b border-gray-100 dark:border-white/[0.06]'>
               <h3 className='text-sm font-semibold text-gray-900 dark:text-white'>Full comparison</h3>
             </div>
-            <div className='overflow-x-auto'>
-              <table className='w-full min-w-[480px]'>
-                <thead>
-                  <tr className='bg-gray-50/80 dark:bg-white/[0.02]'>
-                    <th className='px-5 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider'>Metric</th>
-                    <th className='px-5 py-3 text-left text-xs font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wider'>@{paramUser1}</th>
-                    <th className='px-5 py-3 text-left text-xs font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wider'>@{paramUser2}</th>
+            <table className='w-full table-fixed'>
+              <thead>
+                <tr className='bg-gray-50/80 dark:bg-white/[0.02]'>
+                  <th className='w-1/3 px-3 sm:px-5 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider'>Metric</th>
+                  <th className='w-1/3 px-3 sm:px-5 py-3 text-left text-xs font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wider truncate'>@{paramUser1}</th>
+                  <th className='w-1/3 px-3 sm:px-5 py-3 text-left text-xs font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wider truncate'>@{paramUser2}</th>
+                </tr>
+              </thead>
+              <tbody className='divide-y divide-gray-100 dark:divide-white/[0.04]'>
+                {[
+                  { label: 'Followers',      v1: userData1.followers.toLocaleString(),  v2: userData2.followers.toLocaleString(),  win: winners.followers },
+                  { label: 'Following',      v1: userData1.following,                   v2: userData2.following },
+                  { label: 'Public Repos',   v1: userData1.public_repos,                v2: userData2.public_repos,                win: winners.repos },
+                  { label: 'Public Gists',   v1: userData1.public_gists,                v2: userData2.public_gists,                win: winners.gists },
+                  { label: 'Avg Stars',      v1: reposData1?.length ? (reposData1.reduce((s,r)=>s+r.stargazers_count,0)/reposData1.length).toFixed(1) : '—', v2: reposData2?.length ? (reposData2.reduce((s,r)=>s+r.stargazers_count,0)/reposData2.length).toFixed(1) : '—', win: winners.avgStars },
+                  { label: 'Language',       v1: reposData1 ? getTopLanguage(reposData1) : '—', v2: reposData2 ? getTopLanguage(reposData2) : '—' },
+                  { label: 'Since',          v1: new Date(userData1.created_at).getFullYear(), v2: new Date(userData2.created_at).getFullYear() },
+                  { label: 'Company',        v1: userData1.company  || '—', v2: userData2.company  || '—' },
+                  { label: 'Location',       v1: userData1.location || '—', v2: userData2.location || '—' },
+                  { label: 'Hireable',       v1: userData1.hireable ? 'Yes' : '—', v2: userData2.hireable ? 'Yes' : '—' },
+                ].map(({ label, v1, v2, win }) => (
+                  <tr key={label} className='hover:bg-gray-50/60 dark:hover:bg-white/[0.02] transition-colors'>
+                    <td className='px-3 sm:px-5 py-3 text-xs font-medium text-gray-600 dark:text-gray-400 truncate'>{label}</td>
+                    <td className={`px-3 sm:px-5 py-3 text-xs font-semibold truncate ${win === 1 ? 'text-blue-600 dark:text-blue-400' : 'text-gray-800 dark:text-gray-200'}`}>
+                      {win === 1 && <span className='mr-1'>🏆</span>}{v1}
+                    </td>
+                    <td className={`px-3 sm:px-5 py-3 text-xs font-semibold truncate ${win === 2 ? 'text-blue-600 dark:text-blue-400' : 'text-gray-800 dark:text-gray-200'}`}>
+                      {win === 2 && <span className='mr-1'>🏆</span>}{v2}
+                    </td>
                   </tr>
-                </thead>
-                <tbody className='divide-y divide-gray-100 dark:divide-white/[0.04]'>
-                  {[
-                    { label: 'Followers',      v1: userData1.followers.toLocaleString(),  v2: userData2.followers.toLocaleString(),  win: winners.followers },
-                    { label: 'Following',      v1: userData1.following,                   v2: userData2.following },
-                    { label: 'Public Repos',   v1: userData1.public_repos,                v2: userData2.public_repos,                win: winners.repos },
-                    { label: 'Public Gists',   v1: userData1.public_gists,                v2: userData2.public_gists,                win: winners.gists },
-                    { label: 'Avg Stars/Repo', v1: reposData1?.length ? (reposData1.reduce((s,r)=>s+r.stargazers_count,0)/reposData1.length).toFixed(1) : '—', v2: reposData2?.length ? (reposData2.reduce((s,r)=>s+r.stargazers_count,0)/reposData2.length).toFixed(1) : '—', win: winners.avgStars },
-                    { label: 'Top Language',   v1: reposData1 ? getTopLanguage(reposData1) : '—', v2: reposData2 ? getTopLanguage(reposData2) : '—' },
-                    { label: 'Member Since',   v1: new Date(userData1.created_at).getFullYear(), v2: new Date(userData2.created_at).getFullYear() },
-                    { label: 'Company',        v1: userData1.company  || '—', v2: userData2.company  || '—' },
-                    { label: 'Location',       v1: userData1.location || '—', v2: userData2.location || '—' },
-                    { label: 'Hireable',       v1: userData1.hireable ? 'Yes' : '—', v2: userData2.hireable ? 'Yes' : '—' },
-                  ].map(({ label, v1, v2, win }) => (
-                    <tr key={label} className='hover:bg-gray-50/60 dark:hover:bg-white/[0.02] transition-colors'>
-                      <td className='px-5 py-3 text-xs font-medium text-gray-600 dark:text-gray-400'>{label}</td>
-                      <td className={`px-5 py-3 text-xs font-semibold ${win === 1 ? 'text-blue-600 dark:text-blue-400' : 'text-gray-800 dark:text-gray-200'}`}>
-                        {win === 1 && <span className='mr-1'>🏆</span>}{v1}
-                      </td>
-                      <td className={`px-5 py-3 text-xs font-semibold ${win === 2 ? 'text-blue-600 dark:text-blue-400' : 'text-gray-800 dark:text-gray-200'}`}>
-                        {win === 2 && <span className='mr-1'>🏆</span>}{v2}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
           </div>
         </>
       )}

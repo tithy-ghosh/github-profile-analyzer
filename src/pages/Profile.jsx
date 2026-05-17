@@ -210,15 +210,21 @@ const Profile = () => {
     )
   }
 
-  // ── Not found ──
+  // ── Not found / token error ──
   if (uError) {
+    const isNotFound = uError === 'User not found'
     return (
       <div className='max-w-lg mx-auto px-4 py-20 text-center'>
         <div className='bg-white/70 dark:bg-[#161b22] border border-gray-200/80 dark:border-[#21262d] rounded-2xl p-10 shadow-sm'>
-          <p className='text-5xl mb-4'>🔍</p>
-          <h2 className='text-xl font-bold text-gray-900 dark:text-white mb-2'>User not found</h2>
+          <p className='text-5xl mb-4'>{isNotFound ? '🔍' : '⚠️'}</p>
+          <h2 className='text-xl font-bold text-gray-900 dark:text-white mb-2'>
+            {isNotFound ? 'User not found' : 'Something went wrong'}
+          </h2>
           <p className='text-sm text-gray-500 dark:text-gray-400 mb-6'>
-            <span className='font-semibold text-gray-700 dark:text-gray-300'>@{username}</span> doesn't exist on GitHub.
+            {isNotFound
+              ? <><span className='font-semibold text-gray-700 dark:text-gray-300'>@{username}</span> doesn't exist on GitHub.</>
+              : uError
+            }
           </p>
           <Link to='/' className='inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-medium text-sm bg-blue-600 hover:bg-blue-700 text-white shadow-md shadow-blue-500/30 transition-all hover:-translate-y-0.5'>← Back to search</Link>
         </div>
